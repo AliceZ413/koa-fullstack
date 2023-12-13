@@ -5,6 +5,7 @@ export default defineConfig(() => {
   return {
     plugins: [vue()],
     build: {
+      outDir: 'dist/client',
       manifest: true,
       rollupOptions: {
         input: 'views/main.ts',

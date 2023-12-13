@@ -34,7 +34,7 @@ import { historyApiFallback } from './middleware/history-api-fallback';
     app.use(
       mount(
         '/assets',
-        koaStatic(path.resolve(process.cwd(), './dist/assets'), {})
+        koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})
       )
     );
   }
@@ -42,7 +42,6 @@ import { historyApiFallback } from './middleware/history-api-fallback';
   // 开启监听
   app.listen(PORT, () => {
     console.log(process.env.NODE_ENV);
-
     console.log('Server setup in port: ' + PORT);
   });
 })();

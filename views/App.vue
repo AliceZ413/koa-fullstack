@@ -3,10 +3,10 @@
     <nav>
       <ul>
         <li>
-          <a href="/">/</a>
+          <router-link to="/">/</router-link>
         </li>
         <li>
-          <a href="/about">/about</a>
+          <router-link to="/about">about</router-link>
         </li>
       </ul>
     </nav>
