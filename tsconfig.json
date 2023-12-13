@@ -2,12 +2,14 @@
   "compileOnSave": true,
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "esModuleInterop": true,
+    "isolatedModules": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "strict": true,
-    "outDir": "./output"
+    "outDir": "./output",
+    "jsx": "preserve"
   },
   "include": ["./src", "./views"]
 }
