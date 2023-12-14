@@ -22,6 +22,8 @@ router.post(
       password: '12345',
     };
 
+    ctx.body = {};
+
     ctx.body = {
       user,
     };

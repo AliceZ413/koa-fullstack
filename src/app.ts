@@ -10,6 +10,7 @@ import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
 import { PrismaSessionStore } from './lib/db/session';
 import { apiRouter } from './controller/api';
+import { authGuard } from './middleware/auth';
 
 bootstrap();
 
@@ -33,6 +34,8 @@ async function bootstrap() {
 
   app.use(koaBody());
 
+  // 路由守卫
+  app.use(authGuard());
   // 类似nginx try_file的一个koa中间件，必须放在router之后
   app.use(historyApiFallback());
 

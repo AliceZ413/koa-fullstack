@@ -1,7 +1,6 @@
 /**
  * * 对接Vite的路由
  * * 搭配/src/middleware/history-api-fallback中间件
- * ! 非必要无需动此处代码
  */
 
 import Router from 'koa-tree-router';
@@ -11,6 +10,9 @@ import ViteConfig from '../../vite.config';
 
 const router = new Router();
 
+/**
+ * ! 非必要无需动此处代码
+ */
 router.get('/', async (ctx) => {
   // 读取Vite配置
   const { server } = ViteConfig({
