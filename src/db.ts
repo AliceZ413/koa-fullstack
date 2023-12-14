@@ -1,15 +1,14 @@
-import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { Session } from './entity/session.entity';
+import { PrismaClient } from '@prisma/client';
 
-export const AppDataSource = new DataSource({
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'AliceZ0317',
-  database: 'test',
-  entities: ['entity/*.entity.js'],
-  synchronize: true,
-  logging: true,
-});
+let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient();
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient();
+  }
+  prisma = global.prisma;
+}
+
+export default prisma;

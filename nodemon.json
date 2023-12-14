@@ -1,7 +1,7 @@
 {
     "verbose": false,
     "debug": false,
-    "exec": "node dist/server/src/app.js",
+    "exec": "ts-node --swc --project tsconfig.dev.json src/app.ts",
     "events": {
         "restart": ""
     },

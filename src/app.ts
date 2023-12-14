@@ -7,16 +7,8 @@ import session from 'koa-session';
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
-import { AppDataSource } from './db';
 
-AppDataSource.initialize()
-  .then(() => {
-    bootstrap();
-  })
-  .catch((error) => {
-    console.log('TypeOrm setup failed!');
-    console.log(error);
-  });
+bootstrap();
 
 async function bootstrap() {
   const app = new Koa();

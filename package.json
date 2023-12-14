@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development run-p dev:*",
     "dev:vite": "vite",
-    "dev:server": "npm run build:server && nodemon",
+    "dev:server": "nodemon",
     "build": "npm run build:vite && npm run build:server",
     "build:vite": "vite build",
     "build:server": "tsc --project tsconfig.build.json",
@@ -35,19 +35,18 @@
     "nodemon": "^3.0.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.1.1",
-    "ts-node": "^11.0.0-beta.1",
+    "prisma": "^5.7.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "@prisma/client": "^5.7.0",
     "koa": "^2.14.2",
     "koa-mount": "^4.0.0",
     "koa-session": "^6.4.0",
     "koa-static": "^5.0.0",
     "koa-tree-router": "^0.12.1",
-    "mysql2": "^3.6.5",
-    "reflect-metadata": "^0.2.0",
-    "typeorm": "^0.3.17",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   }
