@@ -3,6 +3,7 @@ import koaStatic from 'koa-static';
 import path from 'node:path';
 import mount from 'koa-mount';
 import session from 'koa-session';
+import koaBody from 'koa-body';
 
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
@@ -29,6 +30,8 @@ async function bootstrap() {
       app
     )
   );
+
+  app.use(koaBody());
 
   // 类似nginx try_file的一个koa中间件，必须放在router之后
   app.use(historyApiFallback());

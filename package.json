@@ -44,11 +44,13 @@
     "@prisma/client": "^5.7.0",
     "destr": "^2.0.2",
     "koa": "^2.14.2",
+    "koa-body": "^6.0.1",
     "koa-mount": "^4.0.0",
     "koa-session": "^6.4.0",
     "koa-static": "^5.0.0",
     "koa-tree-router": "^0.12.1",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "zod": "^3.22.4"
   }
 }
