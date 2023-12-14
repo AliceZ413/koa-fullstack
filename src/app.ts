@@ -7,6 +7,8 @@ import session from 'koa-session';
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
+import { PrismaSessionStore } from './lib/db/session';
+import { apiRouter } from './controller/api';
 
 bootstrap();
 
@@ -17,7 +19,16 @@ async function bootstrap() {
   // session
   // * 使用两个key时，将遍历解析cookie，可以实现更新key但短时间内不会刷掉原有的用户登录
   app.keys = ['keys', 'keykeys'];
-  app.use(session({ key: 'koa.sid' }, app));
+  app.use(
+    session(
+      {
+        key: 'koa.sid',
+        // maxAge: 5 * 1000,
+        store: new PrismaSessionStore(),
+      },
+      app
+    )
+  );
 
   // 类似nginx try_file的一个koa中间件，必须放在router之后
   app.use(historyApiFallback());
@@ -25,6 +36,7 @@ async function bootstrap() {
   // 注册路由
   app.use(viewRouter.routes());
   app.use(testRouter.routes());
+  app.use(apiRouter.routes());
 
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
