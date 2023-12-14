@@ -16,8 +16,9 @@ export const authGuard: AuthGuard = () => {
         } else {
           ctx.redirect('/login');
         }
+      } else {
+        await next();
       }
-      await next();
     }
   };
 };

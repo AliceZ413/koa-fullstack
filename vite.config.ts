@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import pages from 'vite-plugin-pages';
 
 export default defineConfig(() => {
   return {
@@ -7,7 +8,12 @@ export default defineConfig(() => {
       port: 5173,
       host: 'localhost',
     },
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      pages({
+        dirs: 'views/routes',
+      }),
+    ],
     build: {
       outDir: 'dist/client',
       manifest: true,

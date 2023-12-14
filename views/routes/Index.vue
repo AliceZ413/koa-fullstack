@@ -1,7 +1,7 @@
 <template>
   <div>
     Index.vue
-    <n-button>Click Me</n-button>
+    <n-button @click="handleLogout">Logout</n-button>
 
     <!-- <form></form> -->
   </div>
@@ -10,7 +10,20 @@
 <script setup lang="ts">
 import { NButton } from 'naive-ui';
 import { ref } from 'vue';
-const username = ref('');
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+function handleLogout() {
+  fetch('/api/logout', {
+    method: 'post',
+  })
+    .then((res) => res.json())
+    .then(() => {
+      router.replace('/login');
+    })
+    .catch((err) => null);
+}
 
 // fetch('/api/login', {
 //   method: 'POST',

@@ -22,12 +22,23 @@ router.post(
       password: '12345',
     };
 
-    ctx.body = {};
+    const { username, password } = ctx.request.body;
 
+    if (username !== user.username || password !== user.password) {
+      ctx.throw(401, 'User nou found');
+    }
+    ctx.session.user = user;
     ctx.body = {
       user,
     };
   }
 );
+
+router.post('/logout', async (ctx) => {
+  ctx.session = null;
+  ctx.body = {
+    message: 'logout!',
+  };
+});
 
 export const apiRouter = router;
