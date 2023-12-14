@@ -7,10 +7,12 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "strict": true,
+    // "strict": true,
     "jsx": "preserve",
     "types": ["naive-ui/volar"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["./src", "./views", "typings"]
 }

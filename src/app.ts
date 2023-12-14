@@ -7,8 +7,18 @@ import session from 'koa-session';
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
+import { AppDataSource } from './db';
 
-(async function bootstrap() {
+AppDataSource.initialize()
+  .then(() => {
+    bootstrap();
+  })
+  .catch((error) => {
+    console.log('TypeOrm setup failed!');
+    console.log(error);
+  });
+
+async function bootstrap() {
   const app = new Koa();
   const PORT = 3000;
 
@@ -36,7 +46,7 @@ import { historyApiFallback } from './middleware/history-api-fallback';
 
   // 开启监听
   app.listen(PORT, () => {
-    console.log(process.env.NODE_ENV);
+    console.log('Server environment: ' + process.env.NODE_ENV);
     console.log('Server setup in port: ' + PORT);
   });
-})();
+}

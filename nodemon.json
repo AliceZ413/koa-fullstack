@@ -1,0 +1,13 @@
+{
+    "verbose": false,
+    "debug": false,
+    "exec": "node dist/server/src/app.js",
+    "events": {
+        "restart": ""
+    },
+    "watch": [
+        "./src"
+    ],
+    "ext": "ts",
+    "inspect": true
+}

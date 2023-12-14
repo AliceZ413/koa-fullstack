@@ -66,7 +66,6 @@ router.get('/', async (ctx) => {
     );
   }
 
-  // ctx.session
   ctx.type = 'html';
   ctx.body = template;
 });

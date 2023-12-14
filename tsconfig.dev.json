@@ -1,4 +1,9 @@
 {
   "extends": ["./tsconfig.json"],
-  "include": ["./src"]
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "./dist/server"
+  },
+  "include": ["./src"],
+  "exclude": ["./vite.config.ts"]
 }
