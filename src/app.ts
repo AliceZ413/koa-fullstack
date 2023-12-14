@@ -5,7 +5,7 @@ import mount from 'koa-mount';
 import session from 'koa-generic-session';
 
 import { testRouter } from './controller/test';
-import { indexRouter } from './controller';
+import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
 
 (async function bootstrap() {
@@ -26,7 +26,7 @@ import { historyApiFallback } from './middleware/history-api-fallback';
   app.use(historyApiFallback());
 
   // 注册路由
-  app.use(indexRouter.routes());
+  app.use(viewRouter.routes());
   app.use(testRouter.routes());
 
   // 静态资源托管
