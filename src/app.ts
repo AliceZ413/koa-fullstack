@@ -2,7 +2,7 @@ import Koa from 'koa';
 import koaStatic from 'koa-static';
 import path from 'node:path';
 import mount from 'koa-mount';
-import session from 'koa-generic-session';
+import session from 'koa-session';
 
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
@@ -15,12 +15,7 @@ import { historyApiFallback } from './middleware/history-api-fallback';
   // session
   // * 使用两个key时，将遍历解析cookie，可以实现更新key但短时间内不会刷掉原有的用户登录
   app.keys = ['keys', 'keykeys'];
-  app.use(
-    session({
-      key: 'koa.sid',
-      prefix: 'koa:sess',
-    })
-  );
+  app.use(session({ key: 'koa.sid' }, app));
 
   // 类似nginx try_file的一个koa中间件，必须放在router之后
   app.use(historyApiFallback());
