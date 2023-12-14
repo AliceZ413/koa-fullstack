@@ -42,7 +42,7 @@ const model = ref({
 });
 
 function handleValidateButtonClick() {
-  fetch('/api/login', {
+  fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

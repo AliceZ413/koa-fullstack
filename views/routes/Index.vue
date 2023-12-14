@@ -15,7 +15,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 
 function handleLogout() {
-  fetch('/api/logout', {
+  fetch('/api/auth/logout', {
     method: 'post',
   })
     .then((res) => res.json())

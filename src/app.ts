@@ -9,7 +9,7 @@ import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
 import { PrismaSessionStore } from './lib/db/session';
-import { apiRouter } from './controller/api';
+import { authRouter } from './controller/api/auth';
 import { authGuard } from './middleware/auth';
 
 bootstrap();
@@ -42,7 +42,7 @@ async function bootstrap() {
   // 注册路由
   app.use(viewRouter.routes());
   app.use(testRouter.routes());
-  app.use(apiRouter.routes());
+  app.use(authRouter.routes());
 
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
