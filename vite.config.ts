@@ -12,7 +12,7 @@ export default defineConfig(() => {
       outDir: 'dist/client',
       manifest: true,
       rollupOptions: {
-        input: 'views/main.ts',
+        input: 'views/main.tsx',
         output: {
           assetFileNames: `assets/[name].[ext]`,
           chunkFileNames: `assets/[name].js`,

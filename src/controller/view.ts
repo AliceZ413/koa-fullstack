@@ -47,7 +47,7 @@ router.get('/', async (ctx) => {
     }
     template = template.replace(
       '<!-- prod-script -->',
-      `<script type="module" src="/${manifest['views/main.ts'].file}"></script>`
+      `<script type="module" src="/${manifest['views/main.tsx'].file}"></script>`
     );
   } else {
     // 在开发环境下，加载Vite Dev Server接管的资源
