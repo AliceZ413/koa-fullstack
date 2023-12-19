@@ -4,6 +4,7 @@ import path from 'node:path';
 import mount from 'koa-mount';
 import session from 'koa-session';
 import koaBody from 'koa-body';
+import koaCompress from 'koa-compress';
 
 import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
@@ -18,6 +19,8 @@ bootstrap();
 async function bootstrap() {
   const app = new Koa();
   const PORT = 3000;
+
+  app.use(koaCompress({}));
 
   // session
   // * 使用两个key时，将遍历解析cookie，可以实现更新key但短时间内不会刷掉原有的用户登录
