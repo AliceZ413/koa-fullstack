@@ -6,7 +6,6 @@ import session from 'koa-session';
 import koaBody from 'koa-body';
 import koaCompress from 'koa-compress';
 
-import { testRouter } from './controller/test';
 import { viewRouter } from './controller/view';
 import { historyApiFallback } from './middleware/history-api-fallback';
 import { PrismaSessionStore } from './lib/db/session';
@@ -46,7 +45,6 @@ async function bootstrap() {
 
   // 注册路由
   app.use(viewRouter.routes());
-  app.use(testRouter.routes());
   app.use(authRouter.routes());
 
   // 静态资源托管

@@ -47,7 +47,7 @@ router.get('/', async (ctx) => {
     }
     template = template.replace(
       '<!-- prod-script -->',
-      `<script type="module" src="/${manifest['views/main.tsx'].file}"></script>`
+      `<script type="module" src="/${manifest['views/main.ts'].file}"></script>`
     );
   } else {
     // 在开发环境下，加载Vite Dev Server接管的资源
@@ -62,7 +62,7 @@ router.get('/', async (ctx) => {
         window.__vite_plugin_react_preamble_installed__ = true
       </script>
       <script type="module" src="http://${host}:${port}/@vite/client"></script>
-      <script type="module" src="http://${host}:${port}/views/main.tsx"></script>`
+      <script type="module" src="http://${host}:${port}/views/main.ts"></script>`
     );
   }
 

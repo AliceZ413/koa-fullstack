@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig(() => {
   return {
@@ -7,13 +7,14 @@ export default defineConfig(() => {
       port: 5173,
       host: 'localhost',
     },
-    plugins: [react()],
+    plugins: [vueJsx()],
     build: {
-      minify: true,
+      chunkSizeWarningLimit: 2000,
       outDir: 'dist/client',
       manifest: true,
+      minify: true,
       rollupOptions: {
-        input: 'views/main.tsx',
+        input: 'views/main.ts',
         output: {
           assetFileNames: `assets/[name].[ext]`,
           chunkFileNames: `assets/[name].js`,
