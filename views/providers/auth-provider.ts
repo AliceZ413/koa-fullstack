@@ -1,3 +1,0 @@
-interface AuthProvider {
-  isAuthenticated: boolean;
-}

@@ -1,11 +1,11 @@
 import ky from 'ky';
 
-export interface LoginParams {
+export interface ILoginParams {
   username: string;
   password: string;
 }
 
-export interface LoginResult {
+export interface ILoginResult {
   code: number;
   message?: string;
   data?: any;
@@ -13,7 +13,7 @@ export interface LoginResult {
 
 /** 登录接口 POST /api/login/account */
 export async function login(
-  body: LoginParams,
+  body: ILoginParams,
   options?: { [key: string]: any }
 ) {
   return ky('/api/auth/login', {
@@ -22,5 +22,5 @@ export async function login(
       ...body,
     },
     ...(options || {}),
-  }).json<LoginResult>();
+  }).json<ILoginResult>();
 }

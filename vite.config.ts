@@ -14,7 +14,7 @@ export default defineConfig(() => {
       manifest: true,
       minify: true,
       rollupOptions: {
-        input: 'views/main.ts',
+        input: 'ui/main.ts',
         output: {
           assetFileNames: `assets/[name].[ext]`,
           chunkFileNames: `assets/[name].js`,

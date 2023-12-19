@@ -19,15 +19,15 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client", "naive-ui/volar"]
   },
   "include": [
     "./**/*.d.ts",
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "./views/**/*.ts",
-    "./views/**/*.tsx",
-    "./views/**/*.vue"
+    "ui/**/*.ts",
+    "ui/**/*.tsx",
+    "ui/**/*.vue"
   ],
   "exclude": ["node_modules", "dist"]
 }
