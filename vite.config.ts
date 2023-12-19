@@ -9,6 +9,7 @@ export default defineConfig(() => {
     },
     plugins: [react()],
     build: {
+      minify: true,
       outDir: 'dist/client',
       manifest: true,
       rollupOptions: {

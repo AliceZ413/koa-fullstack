@@ -4,7 +4,7 @@ type AuthGuard = () => Koa.Middleware;
 
 export const authGuard: AuthGuard = () => {
   return async (ctx, next) => {
-    if (ctx.url.includes('/api')) {
+    if (ctx.url.includes('/api') || ctx.url.includes('/assets')) {
       // TODO api路由不做跳转处理由前端来判断
       await next();
     } else {

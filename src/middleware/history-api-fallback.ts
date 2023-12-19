@@ -29,7 +29,7 @@ export function historyApiFallback(): Middleware {
     }
 
     let isFlag = false;
-    ['/api'].forEach((item) => {
+    ['/api', '/assets'].forEach((item) => {
       if (!isFlag) {
         isFlag = new RegExp(item).test(ctx.url);
       }
