@@ -60,8 +60,4 @@ function App() {
   );
 }
 
-if (import.meta.hot) {
-  import.meta.hot.dispose(() => router.dispose());
-}
-
 export default App;
