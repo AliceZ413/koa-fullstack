@@ -22,11 +22,12 @@ router.post(
     const { username, password } = ctx.request.body;
 
     if (username !== user.username || password !== user.password) {
-      ctx.throw(401, 'User nou found');
+      ctx.throw(401, 'User not found');
     }
     ctx.session.user = user;
     ctx.body = {
-      user,
+      code: 0,
+      data: user,
     };
   }
 );

@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   useRouteError,
 } from 'react-router-dom';
+import Login from './routes/login';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,11 @@ const router = createBrowserRouter([
         Component: PublicPage,
       },
     ],
+  },
+  {
+    id: 'login',
+    path: '/login',
+    Component: Login,
   },
 ]);
 

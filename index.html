@@ -12,29 +12,10 @@
     />
     <title>Loading...</title>
     <style>
-      :root {
-        --bg-color: #fff;
-        --fg-color: #005b9c;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg-color: #000;
-          --fg-color: #dff0fc;
-        }
-      }
-      .loading {
-        padding: 35vh 0 0;
-        background: var(--bg-color);
-        text-align: center;
-      }
-      path {
-        fill: var(--fg-color);
-        animation: fade 0.8s steps(8) infinite;
-      }
-      @keyframes fade {
-        to {
-          opacity: 0;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
       }
     </style>
   </head>
@@ -80,6 +61,32 @@
           />
         </svg>
       </div>
+      <style>
+        :root {
+          --bg-color: #fff;
+          --fg-color: #005b9c;
+        }
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --bg-color: #000;
+            --fg-color: #dff0fc;
+          }
+        }
+        .loading {
+          padding: 35vh 0 0;
+          background: var(--bg-color);
+          text-align: center;
+        }
+        .loading > svg > path {
+          fill: var(--fg-color);
+          animation: fade 0.8s steps(8) infinite;
+        }
+        @keyframes fade {
+          to {
+            opacity: 0;
+          }
+        }
+      </style>
     </div>
 
     <!-- dev-script -->

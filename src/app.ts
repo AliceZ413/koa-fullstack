@@ -11,6 +11,7 @@ import { historyApiFallback } from './middleware/history-api-fallback';
 import { PrismaSessionStore } from './lib/db/session';
 import { authRouter } from './controller/api/auth';
 import { authGuard } from './middleware/auth';
+import { errorHandler } from './middleware/errors';
 
 bootstrap();
 
@@ -38,6 +39,7 @@ async function bootstrap() {
   app.use(authGuard());
   // 类似nginx try_file的一个koa中间件，必须放在router之后
   app.use(historyApiFallback());
+  app.use(errorHandler());
 
   // 注册路由
   app.use(viewRouter.routes());
