@@ -6,11 +6,9 @@ export default defineComponent({
   name: 'App',
   setup() {
     return () => (
-      <div>
-        <NMessageProvider>
-          <RouterView />
-        </NMessageProvider>
-      </div>
+      <NMessageProvider>
+        <RouterView />
+      </NMessageProvider>
     );
   },
 });

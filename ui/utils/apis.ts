@@ -1,4 +1,4 @@
-import ky from 'ky';
+import request from './request';
 
 export interface ILoginParams {
   username: string;
@@ -16,7 +16,7 @@ export async function login(
   body: ILoginParams,
   options?: { [key: string]: any }
 ) {
-  return ky('/api/auth/login', {
+  return await request('auth/login', {
     method: 'post',
     json: {
       ...body,

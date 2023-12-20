@@ -54,13 +54,13 @@ router.get('/', async (ctx) => {
     // 如果使用@vitejs/plugin-react插件，需要将以下代码加在其他的script之上
     template = template.replace(
       '<!-- dev-script -->',
-      `<script type="module">
+      `<!-- <script type="module">
         import RefreshRuntime from 'http://${host}:${port}/@react-refresh'
         RefreshRuntime.injectIntoGlobalHook(window)
         window.$RefreshReg$ = () => {}
         window.$RefreshSig$ = () => (type) => type
         window.__vite_plugin_react_preamble_installed__ = true
-      </script>
+      </script> -->
       <script type="module" src="http://${host}:${port}/@vite/client"></script>
       <script type="module" src="http://${host}:${port}/ui/main.ts"></script>`
     );

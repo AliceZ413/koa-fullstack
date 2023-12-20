@@ -10,7 +10,8 @@ import {
   NInput,
   useMessage,
 } from 'naive-ui';
-import { ILoginParams } from 'ui/utils/apis';
+import { ILoginParams, login } from '../../utils/apis';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'Login',
@@ -22,6 +23,7 @@ export default defineComponent({
     const loading = ref<boolean>(false);
     const loginFormRef = ref<FormInst | null>(null);
     const message = useMessage();
+    const router = useRouter();
 
     const loginFormRules: FormRules = {
       username: { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -30,11 +32,26 @@ export default defineComponent({
 
     const handleLogin = () => {
       loginFormRef.value?.validate((errors) => {
-        // TODO errors is always undefined!
-        console.log(errors);
-
         if (!errors) {
-          console.log('tongguo');
+          loading.value = true;
+          login({
+            username: loginFormModel.username,
+            password: loginFormModel.password,
+          })
+            .then((res) => {
+              console.log(res);
+              if (res.code === 0) {
+                router.push('/dashboard');
+              } else {
+                message.error(res.message);
+              }
+            })
+            .catch((err) => {
+              message.error('请求出错，请重试');
+            })
+            .finally(() => {
+              loading.value = false;
+            });
         }
       });
     };
@@ -43,6 +60,7 @@ export default defineComponent({
       <>
         <div class={styles['login-container']}>
           <div class={styles['login-card']}>
+            {/* TODO Logo */}
             <div class={styles['title']}>logo img</div>
 
             <div class={styles['content']}>
@@ -51,7 +69,7 @@ export default defineComponent({
                 model={loginFormModel}
                 rules={loginFormRules}
               >
-                <NFormItem>
+                <NFormItem path='username'>
                   <NInput
                     value={loginFormModel.username}
                     placeholder={'用户名'}
@@ -60,7 +78,7 @@ export default defineComponent({
                     onUpdateValue={(value) => (loginFormModel.username = value)}
                   />
                 </NFormItem>
-                <NFormItem>
+                <NFormItem path='password'>
                   <NInput
                     value={loginFormModel.password}
                     placeholder={'密码'}

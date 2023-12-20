@@ -2,8 +2,10 @@ import { createApp } from 'vue';
 
 import App from './App';
 import { router } from './routes';
+
 import 'normalize.css';
-import './global.scss';
+import './styles/global.scss';
+import './styles/transition.scss';
 
 const app = createApp(App);
 
