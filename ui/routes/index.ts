@@ -4,6 +4,9 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('./login/login'),
+    meta: {
+      layout: false,
+    },
   },
   {
     path: '/dashboard',

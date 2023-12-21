@@ -16,7 +16,7 @@ export async function login(
   body: ILoginParams,
   options?: { [key: string]: any }
 ) {
-  return await request('auth/login', {
+  return request('auth/login', {
     method: 'post',
     json: {
       ...body,

@@ -8,7 +8,13 @@ export default defineComponent({
   name: 'layout',
   setup() {
     return () => (
-      <NLayout hasSider>
+      <NLayout
+        hasSider
+        contentStyle={{
+          width: '100%',
+          height: '100vh',
+        }}
+      >
         <Sidebar />
         <NLayout>
           <NLayoutHeader>Header</NLayoutHeader>

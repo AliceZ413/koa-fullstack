@@ -1,6 +1,6 @@
 import { MenuOption, NLayoutSider, NMenu } from 'naive-ui';
 import { defineComponent, ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
 import styles from './sidebar.module.scss';
 
@@ -37,10 +37,18 @@ const SidebarMenuItem = defineComponent({
   },
 });
 
-export default defineComponent({
+const Sidebar = defineComponent({
   name: 'sidebar',
   setup() {
-    const collapse = ref(false);
+    const router = useRouter();
+    const allRoutes = router.getRoutes();
+    allRoutes.map((item) => {
+      console.log(item);
+      return {
+        key: item.path,
+      } as MenuOption;
+    });
+
     const menuOptions: MenuOption[] = [
       {
         key: '/dashboard',
@@ -52,10 +60,6 @@ export default defineComponent({
         ),
       },
     ];
-
-    const onUpdateCollapsed = (value: boolean) => {
-      collapse.value = value;
-    };
 
     return () => (
       <NLayoutSider
@@ -69,3 +73,5 @@ export default defineComponent({
     );
   },
 });
+
+export default Sidebar;
