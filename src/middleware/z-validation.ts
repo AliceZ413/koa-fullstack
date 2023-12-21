@@ -31,11 +31,8 @@ function defaultTransformer(err: ZodError): object {
 }
 
 function toDetailObject(err: ZodError<unknown>) {
-  return err.issues.reduce(
-    (prev, current) =>
-      Object.assign({}, prev, {
-        [current.path.join('.')]: `${current.message}`,
-      }),
-    {}
-  );
+  return err.issues.reduce((prev, current) => {
+    prev[current.path.join('.')] = `${current.message}`;
+    return prev;
+  }, {});
 }
