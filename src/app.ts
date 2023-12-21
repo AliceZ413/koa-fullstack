@@ -1,17 +1,17 @@
-import Koa from 'koa';
-import koaStatic from 'koa-static';
 import path from 'node:path';
-import mount from 'koa-mount';
-import session from 'koa-session';
+import Koa from 'koa';
 import koaBody from 'koa-body';
 import koaCompress from 'koa-compress';
+import mount from 'koa-mount';
+import session from 'koa-session';
+import koaStatic from 'koa-static';
 
-import { viewRouter } from './controller/view';
-import { historyApiFallback } from './middleware/history-api-fallback';
-import { PrismaSessionStore } from './lib/db/session';
 import { authRouter } from './controller/api/auth';
+import { viewRouter } from './controller/view';
+import { PrismaSessionStore } from './lib/db/session';
 import { authGuard } from './middleware/auth';
 import { errorHandler } from './middleware/errors';
+import { historyApiFallback } from './middleware/history-api-fallback';
 
 bootstrap();
 
@@ -49,17 +49,12 @@ async function bootstrap() {
 
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
-    app.use(
-      mount(
-        '/assets',
-        koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})
-      )
-    );
+    app.use(mount('/assets', koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})));
   }
 
   // 开启监听
   app.listen(PORT, () => {
-    console.log('Server environment: ' + process.env.NODE_ENV);
-    console.log('Server setup in port: ' + PORT);
+    console.log(`Server environment: ${process.env.NODE_ENV}`);
+    console.log(`Server setup in port: ${PORT}`);
   });
 }

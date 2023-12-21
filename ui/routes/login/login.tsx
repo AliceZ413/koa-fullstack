@@ -1,17 +1,9 @@
 import { defineComponent, reactive, ref } from 'vue';
 
-import styles from './login.module.scss';
-import {
-  FormInst,
-  FormRules,
-  NButton,
-  NForm,
-  NFormItem,
-  NInput,
-  useMessage,
-} from 'naive-ui';
-import { ILoginParams, login } from '../../utils/apis';
+import { FormInst, FormRules, NButton, NForm, NFormItem, NInput, useMessage } from 'naive-ui';
 import { useRouter } from 'vue-router';
+import { ILoginParams, login } from '../../utils/apis';
+import styles from './login.module.scss';
 
 export default defineComponent({
   name: 'Login',
@@ -61,21 +53,19 @@ export default defineComponent({
         <div class={styles['login-container']}>
           <div class={styles['login-card']}>
             {/* TODO Logo */}
-            <div class={styles['title']}>logo img</div>
+            <div class={styles.title}>logo img</div>
 
-            <div class={styles['content']}>
-              <NForm
-                ref={loginFormRef}
-                model={loginFormModel}
-                rules={loginFormRules}
-              >
+            <div class={styles.content}>
+              <NForm ref={loginFormRef} model={loginFormModel} rules={loginFormRules}>
                 <NFormItem path='username'>
                   <NInput
                     value={loginFormModel.username}
                     placeholder={'用户名'}
                     type='text'
                     size='large'
-                    onUpdateValue={(value) => (loginFormModel.username = value)}
+                    onUpdateValue={(value) => {
+                      loginFormModel.username = value;
+                    }}
                   />
                 </NFormItem>
                 <NFormItem path='password'>
@@ -84,17 +74,13 @@ export default defineComponent({
                     placeholder={'密码'}
                     type='password'
                     size='large'
-                    onUpdateValue={(value) => (loginFormModel.password = value)}
+                    onUpdateValue={(value) => {
+                      loginFormModel.password = value;
+                    }}
                   />
                 </NFormItem>
                 <NFormItem>
-                  <NButton
-                    type='primary'
-                    size='large'
-                    loading={loading.value}
-                    block
-                    onClick={handleLogin}
-                  >
+                  <NButton type='primary' size='large' loading={loading.value} block onClick={handleLogin}>
                     登 录
                   </NButton>
                 </NFormItem>

@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue';
 
+import { NLayout, NLayoutContent, NLayoutHeader, NSpace } from 'naive-ui';
 import styles from './layouts.module.scss';
 import Sidebar from './sidebar';
-import { NLayout, NLayoutContent, NLayoutHeader, NSpace } from 'naive-ui';
 
 export default defineComponent({
   name: 'layout',

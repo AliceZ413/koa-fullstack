@@ -8,14 +8,11 @@ export interface ILoginParams {
 export interface ILoginResult {
   code: number;
   message?: string;
-  data?: any;
+  data?: unknown;
 }
 
 /** 登录接口 POST /api/login/account */
-export async function login(
-  body: ILoginParams,
-  options?: { [key: string]: any }
-) {
+export async function login(body: ILoginParams, options?: { [key: string]: unknown }) {
   return request('auth/login', {
     method: 'post',
     json: {

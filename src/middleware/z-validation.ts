@@ -1,5 +1,5 @@
-import { ZodError, ZodSchema } from 'zod';
 import Koa from 'koa';
+import { ZodError, ZodSchema } from 'zod';
 
 /**
  * 基于zod的koa校验中间件
@@ -32,10 +32,10 @@ function defaultTransformer(err: ZodError): object {
 
 function toDetailObject(err: ZodError<unknown>) {
   return err.issues.reduce(
-    (prev, current) => ({
-      ...prev,
-      [current.path.join('.')]: `${current.message}`,
-    }),
+    (prev, current) =>
+      Object.assign({}, prev, {
+        [current.path.join('.')]: `${current.message}`,
+      }),
     {}
   );
 }

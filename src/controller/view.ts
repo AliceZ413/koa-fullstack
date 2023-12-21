@@ -3,9 +3,9 @@
  * * 搭配/src/middleware/history-api-fallback中间件
  */
 
-import Router from 'koa-tree-router';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import Router from 'koa-tree-router';
 import ViteConfig from '../../vite.config';
 
 const router = new Router();
@@ -37,17 +37,14 @@ router.get('/', async (ctx) => {
 
   if (process.env.NODE_ENV === 'production') {
     // 在生产环境下，加载打包后的资源文件
-    let manifest: Record<string, any> = {};
-    const manifestStr = await fsp.readFile(
-      path.resolve(process.cwd(), './dist/client/.vite/manifest.json'),
-      'utf-8'
-    );
+    let manifest: Record<string, unknown> = {};
+    const manifestStr = await fsp.readFile(path.resolve(process.cwd(), './dist/client/.vite/manifest.json'), 'utf-8');
     if (manifestStr) {
       manifest = JSON.parse(manifestStr);
     }
     template = template.replace(
       '<!-- prod-script -->',
-      `<script type="module" src="/${manifest['ui/main.ts'].file}"></script>`
+      `<script type="module" src="/${(manifest['ui/main.ts'] as { file: string }).file}"></script>`
     );
   } else {
     // 在开发环境下，加载Vite Dev Server接管的资源

@@ -9,10 +9,7 @@ const SidebarLogo = defineComponent({
   setup() {
     return () => (
       <div class={styles['sidebar-header']}>
-        <RouterLink
-          to='/dashboard'
-          key='expand'
-        >
+        <RouterLink to='/dashboard' key='expand'>
           <div>Dashboard</div>
         </RouterLink>
       </div>
@@ -52,21 +49,12 @@ const Sidebar = defineComponent({
     const menuOptions: MenuOption[] = [
       {
         key: '/dashboard',
-        label: () => (
-          <SidebarMenuItem
-            to='/dashboard'
-            title='Dashboard'
-          />
-        ),
+        label: () => <SidebarMenuItem to='/dashboard' title='Dashboard' />,
       },
     ];
 
     return () => (
-      <NLayoutSider
-        width={240}
-        showTrigger='arrow-circle'
-        bordered
-      >
+      <NLayoutSider width={240} showTrigger='arrow-circle' bordered>
         <SidebarLogo />
         <NMenu options={menuOptions} />
       </NLayoutSider>

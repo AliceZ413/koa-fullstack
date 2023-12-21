@@ -1,5 +1,5 @@
-import { Session, stores } from 'koa-session';
 import { destr } from 'destr';
+import { Session, stores } from 'koa-session';
 
 import prisma from './db';
 
@@ -10,11 +10,7 @@ export class PrismaSessionStore implements stores {
    * @param maxAge
    * @param data
    */
-  async get(
-    sid: string,
-    maxAge: number | 'session',
-    data: { rolling: boolean }
-  ) {
+  async get(sid: string, maxAge: number | 'session', data: { rolling: boolean }) {
     const p = prisma.session;
     const session = await p.findUnique({
       where: { sid },
@@ -25,11 +21,7 @@ export class PrismaSessionStore implements stores {
     }
 
     try {
-      if (
-        session.sid &&
-        session.expiresAt &&
-        new Date().valueOf() >= session.expiresAt.valueOf()
-      ) {
+      if (session.sid && session.expiresAt && new Date().valueOf() >= session.expiresAt.valueOf()) {
         console.log(sid);
 
         await p.delete({ where: { sid } });
@@ -47,12 +39,12 @@ export class PrismaSessionStore implements stores {
     maxAge: number | 'session',
     data: { changed: boolean; rolling: boolean }
   ) {
-    let sessionString = JSON.stringify(sess);
+    const sessionString = JSON.stringify(sess);
     const existingSession = await prisma.session.findUnique({
       where: { sid },
     });
-    let ttl = typeof maxAge === 'number' ? Math.floor(maxAge) : 86400000;
-    let expiresAt = new Date(new Date().valueOf() + ttl);
+    const ttl = typeof maxAge === 'number' ? Math.floor(maxAge) : 86400000;
+    const expiresAt = new Date(new Date().valueOf() + ttl);
 
     if (existingSession !== null) {
       await prisma.session.update({

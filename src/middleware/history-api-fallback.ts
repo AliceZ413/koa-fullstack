@@ -21,19 +21,16 @@ export function historyApiFallback(): Middleware {
       return next();
     }
 
-    if (
-      !ctx.header.accept.includes('text/html') ||
-      !ctx.header.accept.includes('*/*')
-    ) {
+    if (!ctx.header.accept.includes('text/html') || !ctx.header.accept.includes('*/*')) {
       return next();
     }
 
     let isFlag = false;
-    ['/api', '/assets'].forEach((item) => {
+    for (const item of ['/api', '/assets']) {
       if (!isFlag) {
         isFlag = new RegExp(item).test(ctx.url);
       }
-    });
+    }
     if (isFlag) {
       return next();
     }

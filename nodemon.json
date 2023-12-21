@@ -1,13 +1,11 @@
 {
-    "verbose": false,
-    "debug": false,
-    "exec": "ts-node --swc --project tsconfig.dev.json src/app.ts",
-    "events": {
-        "restart": ""
-    },
-    "watch": [
-        "./src"
-    ],
-    "ext": "ts",
-    "inspect": true
+	"verbose": false,
+	"debug": false,
+	"exec": "ts-node --swc --project tsconfig.dev.json src/app.ts",
+	"events": {
+		"restart": ""
+	},
+	"watch": ["./src"],
+	"ext": "ts",
+	"inspect": true
 }

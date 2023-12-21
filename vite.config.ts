@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
@@ -16,9 +16,9 @@ export default defineConfig(() => {
       rollupOptions: {
         input: 'ui/main.ts',
         output: {
-          assetFileNames: `assets/[name].[ext]`,
-          chunkFileNames: `assets/[name].js`,
-          entryFileNames: `assets/[name].js`,
+          assetFileNames: 'assets/[name].[ext]',
+          chunkFileNames: 'assets/[name].js',
+          entryFileNames: 'assets/[name].js',
         },
       },
     },
