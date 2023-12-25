@@ -39,4 +39,22 @@ router.post('/logout', async (ctx) => {
   };
 });
 
+router.get(
+  '/protected',
+  async (ctx, next) => {
+    console.log(ctx.session.user);
+
+    if (ctx.session.user) {
+      await next();
+    } else {
+      ctx.throw(403, 'UnAuthorization');
+    }
+  },
+  async (ctx) => {
+    ctx.body = {
+      success: true,
+    };
+  }
+);
+
 export const authRouter = router;

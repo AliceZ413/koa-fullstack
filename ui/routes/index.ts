@@ -11,7 +11,12 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     component: () => import('../layout/layout'),
-    children: [],
+    children: [
+      {
+        path: '/dashboard/',
+        component: () => import('./dashboard'),
+      },
+    ],
   },
 ];
 

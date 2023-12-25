@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue';
 
 import { NLayout, NLayoutContent, NLayoutHeader, NSpace } from 'naive-ui';
+import { RouterView } from 'vue-router';
 import styles from './layouts.module.scss';
 import Sidebar from './sidebar';
 
@@ -18,7 +19,9 @@ export default defineComponent({
         <Sidebar />
         <NLayout>
           <NLayoutHeader>Header</NLayoutHeader>
-          <NLayoutContent>layout</NLayoutContent>
+          <NLayoutContent>
+            <RouterView />
+          </NLayoutContent>
         </NLayout>
       </NLayout>
       //   <div class={styles['app-wrapper']}>
