@@ -4,6 +4,8 @@
   "description": "基于Koa和Vite的全栈框架",
   "main": "index.js",
   "scripts": {
+    "prisma:g": "npx prisma generate",
+    "prestart": "npm run prisma:g",
     "dev": "cross-env NODE_ENV=development run-p dev:*",
     "dev:vite": "vite",
     "dev:server": "nodemon",
