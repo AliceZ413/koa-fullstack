@@ -6,7 +6,6 @@
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import Router from 'koa-tree-router';
-import ViteConfig from '../../vite.config';
 
 const router = new Router();
 
@@ -14,14 +13,8 @@ const router = new Router();
  * ! 非必要无需动此处代码
  */
 router.get('/', async (ctx) => {
-  // 读取Vite配置
-  const { server } = ViteConfig({
-    command: process.env.NODE_ENV === 'production' ? 'build' : 'serve',
-    mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-  });
-  const host = server?.host || 'localhost';
-  const port = server?.port || 5173;
-
+  const host = 'localhost';
+  const port = 5173;
   // 读取index.html模板
   const file = await fsp.readFile(path.resolve(process.cwd(), './index.html'));
   let template;
