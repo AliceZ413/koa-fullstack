@@ -39,7 +39,7 @@ async function bootstrap() {
 
   // 路由守卫
   app.use(authGuard());
-  // 类似nginx try_file的一个koa中间件，必须放在router之后
+  // 类似nginx try_file的一个koa中间件
   app.use(historyApiFallback());
   app.use(errorHandler());
 

@@ -1,4 +1,4 @@
-import ky from 'ky';
+import { authProtected } from '../../utils/apis';
 import { defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -7,14 +7,10 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     onMounted(() => {
-      ky.get('/api/auth/protected')
-        .json()
-        .then((data) => {
-          if ((data as { statusCode: number }).statusCode === 403) {
-            router.replace('/login');
-          }
-        });
+      authProtected().then((res) => {
+        console.log(res);
+      });
     });
-    return () => <div>Dashboard/Index4</div>;
+    return () => <div>Dashboard/Index5</div>;
   },
 });
