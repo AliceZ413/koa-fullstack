@@ -1,6 +1,6 @@
-import { authProtected } from '../../utils/apis';
 import { defineComponent, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { authProtected } from '../../utils/apis';
 
 export default defineComponent({
   name: 'DashboardIndex',

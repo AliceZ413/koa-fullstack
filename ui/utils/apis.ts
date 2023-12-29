@@ -12,10 +12,7 @@ export interface ILoginResult {
 }
 
 /** 登录接口 POST /api/login/account */
-export async function login(
-  body: ILoginParams,
-  options?: { [key: string]: unknown }
-) {
+export async function login(body: ILoginParams, options?: { [key: string]: unknown }) {
   return ky('auth/login', {
     method: 'post',
     json: {

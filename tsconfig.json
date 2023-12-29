@@ -17,7 +17,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
     },
     "types": ["node", "vite/client", "naive-ui/volar"]
   },
