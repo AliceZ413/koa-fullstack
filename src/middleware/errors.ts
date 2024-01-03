@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import {ZodError} from "zod";
+import { ZodError } from 'zod';
 
 export const errorHandler: () => Koa.Middleware = () => {
   return async (ctx, next) => {

@@ -13,13 +13,10 @@ import { authGuard } from './middleware/auth';
 import { errorHandler } from './middleware/errors';
 import { historyApiFallback } from './middleware/history-api-fallback';
 
-bootstrap();
+const PORT = 3000;
 
 async function bootstrap() {
   const app = new Koa();
-  const PORT = 3000;
-
-  app.use(koaCompress({}));
 
   // session
   // * 使用两个key时，将遍历解析cookie，可以实现更新key但短时间内不会刷掉原有的用户登录
@@ -49,12 +46,22 @@ async function bootstrap() {
 
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
+    app.use(koaCompress());
     app.use(mount('/assets', koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})));
   }
 
-  // 开启监听
-  app.listen(PORT, () => {
-    console.log(`Server environment: ${process.env.NODE_ENV}`);
-    console.log(`Server setup in port: ${PORT}`);
-  });
+  return { app };
 }
+
+bootstrap()
+  .then(({ app }) => {
+    // 开启监听
+    app.listen(PORT, () => {
+      console.log(`Server environment: ${process.env.NODE_ENV}`);
+      console.log(`Server setup in port: ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    process.exit(0);
+  });
