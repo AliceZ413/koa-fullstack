@@ -6,7 +6,7 @@ const defaultOptions: Options = {
     beforeError: [
       (error) => {
         const { response } = error;
-        if (response && response.body) {
+        if (response?.body) {
           console.log(response.body);
         }
         return error;
