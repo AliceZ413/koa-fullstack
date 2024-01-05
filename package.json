@@ -12,8 +12,8 @@
     "build": "npm run build:vite && npm run build:server",
     "build:vite": "vite build",
     "build:server": "tsc --project tsconfig.build.json",
-    "preview": "cross-env NODE_ENV=production node ./dist/koa/app.js",
-    "start": "NODE_ENV=production node ./dist/koa/app.js",
+    "preview": "cross-env NODE_ENV=production node ./dist/koa-server/app.js",
+    "start": "NODE_ENV=production node ./dist/koa-server/app.js",
     "check": "biome check --apply ./src ./ui"
   },
   "keywords": [

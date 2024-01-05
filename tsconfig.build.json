@@ -2,7 +2,7 @@
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
 		"module": "CommonJS",
-		"outDir": "./dist/koa"
+		"outDir": "./dist/koa-server"
 	},
 	"include": ["./src/**/*.ts"]
 }
