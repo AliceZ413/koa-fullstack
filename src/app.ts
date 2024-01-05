@@ -1,6 +1,6 @@
 import path from 'node:path';
 import Koa from 'koa';
-import koaBody from 'koa-body';
+import { koaBody } from 'koa-body';
 import koaCompress from 'koa-compress';
 import mount from 'koa-mount';
 import session from 'koa-session';
