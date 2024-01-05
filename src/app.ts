@@ -7,11 +7,12 @@ import session from 'koa-session';
 import koaStatic from 'koa-static';
 
 import { authRouter } from './controller/api/auth';
-import { viewRouter } from './controller/view';
 import { PrismaSessionStore } from './lib/db/session';
 import { authGuard } from './middleware/auth';
 import { errorHandler } from './middleware/errors';
 import { historyApiFallback } from './middleware/history-api-fallback';
+import koaConnect from 'koa-connect';
+import { renderPage } from 'vike/server';
 
 const PORT = 3000;
 
@@ -35,20 +36,46 @@ async function bootstrap() {
   app.use(koaBody());
 
   // 路由守卫
-  app.use(authGuard());
+  // app.use(authGuard());
   // 类似nginx try_file的一个koa中间件
   app.use(historyApiFallback());
   app.use(errorHandler());
 
   // 注册路由
-  app.use(viewRouter.routes());
   app.use(authRouter.routes());
 
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
     app.use(koaCompress());
     app.use(mount('/assets', koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})));
+  } else {
+    const vite = await import('vite');
+    const viteDevServer = await vite.createServer({
+      root: path.resolve(process.cwd()),
+      server: { middlewareMode: true },
+    });
+    app.use(koaConnect(viteDevServer.middlewares));
   }
+
+  app.use(async (ctx, next) => {
+    const pageContextInit = {
+      urlOriginal: ctx.originalUrl,
+    };
+    const pageContext = await renderPage(pageContextInit);
+    const { httpResponse } = pageContext;
+    if (!httpResponse) {
+      return next();
+    }
+    const { body, statusCode, headers, earlyHints } = httpResponse;
+    if (ctx.res.writeEarlyHints) {
+      ctx.res.writeEarlyHints({
+        link: earlyHints.map((e) => e.earlyHintLink),
+      });
+    }
+    ctx.status = httpResponse.statusCode;
+    ctx.type = httpResponse.contentType;
+    ctx.body = httpResponse.body;
+  });
 
   return { app };
 }
