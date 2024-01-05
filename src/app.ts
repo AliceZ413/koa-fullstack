@@ -47,7 +47,12 @@ async function bootstrap() {
   // 静态资源托管
   if (process.env.NODE_ENV === 'production') {
     app.use(koaCompress());
-    app.use(mount('/assets', koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})));
+    app.use(
+      mount(
+        '/assets',
+        koaStatic(path.resolve(process.cwd(), './dist/client/assets'), {})
+      )
+    );
   } else {
     const vite = await import('vite');
     const viteDevServer = await vite.createServer({
@@ -72,9 +77,9 @@ async function bootstrap() {
         link: earlyHints.map((e) => e.earlyHintLink),
       });
     }
-    ctx.status = httpResponse.statusCode;
-    ctx.type = httpResponse.contentType;
-    ctx.body = httpResponse.body;
+    ctx.status = statusCode;
+    headers.map(([name, value]) => ctx.set(name, value));
+    ctx.body = body;
   });
 
   return { app };
