@@ -1,7 +1,16 @@
 {
   "name": "koa-fullstack",
   "version": "0.1.0",
-  "private": true,
+  "license": "ISC",
+  "author": "Stary",
+  "keywords": [
+    "koa",
+    "koa.js",
+    "vite",
+    "next.js",
+    "fullstack",
+    "web"
+  ],
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev",
