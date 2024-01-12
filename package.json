@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@koa/router": "^12.0.1",
+    "@t3-oss/env-nextjs": "^0.7.1",
     "koa": "^2.15.0",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/koa": "^2.14.0",
