@@ -1,0 +1,11 @@
+// tsconfig.build config for `/server/app.ts`
+{
+  "extends": ["./tsconfig.json"],
+  "compilerOptions": {
+    "noEmit": false,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "./dist"
+  },
+  "include": ["server/**/*.ts"]
+}
