@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
+    "db:push": "prisma db push",
     "build": "npm run build:next && npm run build:server",
     "build:next": "next build",
     "build:server": "tsc -p ./tsconfig.build.server.json",
@@ -13,6 +15,7 @@
   },
   "dependencies": {
     "@koa/router": "^12.0.1",
+    "@prisma/client": "^5.8.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "koa": "^2.15.0",
     "next": "14.0.4",
@@ -29,6 +32,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
+    "prisma": "^5.8.0",
     "typescript": "^5"
   }
 }
