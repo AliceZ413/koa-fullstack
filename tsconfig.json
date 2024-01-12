@@ -1,32 +1,27 @@
 {
-  "compileOnSave": true,
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    // "strict": true,
-    "jsx": "preserve",
-    "jsxImportSource": "vue",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-    },
-    "types": ["node", "vite/client", "naive-ui/volar"]
+      "@/*": ["./src/*"]
+    }
   },
-  "include": [
-    "./**/*.d.ts",
-    "./src/**/*.tsx",
-    "./src/**/*.ts",
-    "ui/**/*.ts",
-    "ui/**/*.tsx",
-    "ui/**/*.vue"
-  ],
-  "exclude": ["node_modules", "dist"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

@@ -1,8 +1,0 @@
-{
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"module": "CommonJS",
-		"outDir": "./dist/koa-server"
-	},
-	"include": ["./src/**/*.ts"]
-}
