@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import SessionProvider from '@/components/SessionProvider';
 import getServerSession from '@/lib/getServerSession';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,12 +17,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession();
-  console.log('session', session);
-
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <AntdRegistry>
+            <main>{children}</main>
+          </AntdRegistry>
+        </SessionProvider>
       </body>
     </html>
   );

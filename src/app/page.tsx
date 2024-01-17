@@ -42,11 +42,8 @@ export default function Home() {
     });
   };
 
-  const { data } = useSession();
-
   return (
     <div>
-      {data ? <div>{data.user?.email}</div> : null}
       <button onClick={handleSignUp}>sign up</button>
       <br />
       <button onClick={handleSignIn}>sign in</button>

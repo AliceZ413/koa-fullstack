@@ -1,4 +1,4 @@
-import { authOptionsWrapper } from '@/app/api/auth/[...nextauth]/route';
+import { authOptionsWrapper } from '@/lib/nextAuthOptions';
 import { getServerSession as _getServerSession } from 'next-auth/next';
 import { cookies, headers } from 'next/headers';
 
