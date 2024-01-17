@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google';
 import SessionProvider from '@/components/SessionProvider';
 import getServerSession from '@/lib/getServerSession';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { App } from 'antd';
+
+import 'normalize.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +25,9 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider session={session}>
           <AntdRegistry>
-            <main>{children}</main>
+            <App>
+              <main>{children}</main>
+            </App>
           </AntdRegistry>
         </SessionProvider>
       </body>

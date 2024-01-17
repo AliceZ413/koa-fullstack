@@ -1,7 +1,5 @@
 import NextAuth from 'next-auth';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { authOptionsWrapper } from '@/lib/nextAuthOptions';
-import { db } from '@/server/db';
 
 import { NextRequest } from 'next/server';
 
