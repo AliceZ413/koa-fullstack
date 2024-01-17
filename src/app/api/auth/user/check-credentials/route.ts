@@ -1,16 +1,16 @@
 import { logger } from '@/lib/logger';
 import { db } from '@/server/db';
 import sha256 from 'crypto-js/sha256';
-import { NextApiRequest } from 'next';
 
 const hashPassword = (password: string) => {
   return sha256(password).toString();
 };
 
-export const POST = async (request: NextApiRequest) => {
+export const POST = async (request: Request) => {
+  const json = await request.json();
   const user = await db.user.findFirst({
     where: {
-      email: request.body.username,
+      email: json.username,
     },
     select: {
       id: true,
@@ -20,9 +20,8 @@ export const POST = async (request: NextApiRequest) => {
       password: true,
     },
   });
-  console.log(request.body.password);
-  
-  if (user && user.password == hashPassword(request.body.password)) {
+
+  if (user && user.password == hashPassword(json.password)) {
     logger.debug('password correct');
     return Response.json({ ...user });
   } else {

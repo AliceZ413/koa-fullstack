@@ -1,8 +1,7 @@
 'use client';
 
 import { logger } from '@/lib/logger';
-import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import ky from 'ky';
 
 export default function Home() {
@@ -37,12 +36,22 @@ export default function Home() {
         logger.error(err);
       });
   };
+  const handleSignOut = async () => {
+    await signOut({
+      redirect: false,
+    });
+  };
+
+  const { data } = useSession();
 
   return (
     <div>
+      {data ? <div>{data.user?.email}</div> : null}
       <button onClick={handleSignUp}>sign up</button>
       <br />
       <button onClick={handleSignIn}>sign in</button>
+      <br />
+      <button onClick={handleSignOut}>sign out</button>
     </div>
   );
 }
