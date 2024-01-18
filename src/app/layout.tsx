@@ -4,6 +4,7 @@ import SessionProvider from '@/components/SessionProvider';
 import getServerSession from '@/lib/getServerSession';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { App } from 'antd';
+import ConfigProvider from '@/components/ConfigProvider';
 
 import 'normalize.css';
 
@@ -25,9 +26,11 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider session={session}>
           <AntdRegistry>
-            <App>
-              <main>{children}</main>
-            </App>
+            <ConfigProvider>
+              <App>
+                <main>{children}</main>
+              </App>
+            </ConfigProvider>
           </AntdRegistry>
         </SessionProvider>
       </body>
