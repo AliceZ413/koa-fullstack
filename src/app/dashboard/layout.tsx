@@ -38,7 +38,10 @@ export default function DashboardLayout({ children }: PropsWithChildren) {
         hasSider
         className={styles.page}
       >
-        <LayoutSider menus={items} />
+        <LayoutSider
+          theme='light'
+          menus={items}
+        />
         <div className={styles.container}>
           <Header></Header>
           <Content className={styles.content}>
