@@ -1,4 +1,29 @@
 {
-  "extends": "./tsconfig.json",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2018"],
+    "jsx": "react-jsx",
+    "target": "ES2018",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "stripInternal": true,
+    "skipLibCheck": true,
+    "pretty": true,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "typeRoots": ["./typings", "./node_modules/@types"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "app", "scripts"]
 }
