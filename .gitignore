@@ -5,3 +5,5 @@ output
 .env
 .next
 db.sqlite
+.cache
+build
