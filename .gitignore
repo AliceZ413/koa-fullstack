@@ -7,3 +7,4 @@ output
 db.sqlite
 .cache
 build
+app/styles/antd.min.css

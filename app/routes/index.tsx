@@ -4,12 +4,15 @@
 
 import { Outlet } from '@remix-run/react';
 import { App, ConfigProvider } from 'antd';
+import { Suspense } from 'react';
 
 export default function IndexPage() {
   return (
-    <ConfigProvider>
+    <ConfigProvider componentSize='middle'>
       <App>
-        <div>index</div>
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </App>
     </ConfigProvider>
   );

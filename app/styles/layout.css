@@ -1,0 +1,39 @@
+.layout-page {
+  height: 100%;
+}
+.layout-page-header {
+  padding: 0 !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 9;
+  box-shadow: 0 4px 10px #dddddd;
+  background-color: #fff;
+}
+
+.layout-page-header-main {
+  padding: 0 15px;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout-page-header-main .actions {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.layout-page-header-main .sidebar-trigger {
+  cursor: pointer;
+}
+
+.actions .user-action {
+  cursor: pointer;
+}
+
+.layout-page-sider {
+  margin-bottom: 10px;
+}

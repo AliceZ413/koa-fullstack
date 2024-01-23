@@ -1,5 +1,5 @@
 import { cssBundleHref } from '@remix-run/css-bundle';
-import { LinksFunction, MetaFunction } from '@remix-run/node';
+import { LinkDescriptor, LinksFunction, MetaFunction } from '@remix-run/node';
 import {
   Links,
   LiveReload,
@@ -9,8 +9,21 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
+import resetStyles from './styles/reset.css';
+import antdStyle from './styles/antd.min.css';
+
 export const links: LinksFunction = () => {
-  const result = [{ rel: 'icon', href: 'data:image/x-icon;base64,AA' }];
+  const result: LinkDescriptor[] = [
+    { rel: 'icon', href: 'data:image/x-icon;base64,AA' },
+    {
+      rel: 'stylesheet',
+      href: resetStyles,
+    },
+    {
+      rel: 'stylesheet',
+      href: antdStyle,
+    },
+  ];
 
   cssBundleHref && result.push({ rel: 'stylesheet', href: cssBundleHref });
 

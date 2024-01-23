@@ -12,18 +12,20 @@
     "web"
   ],
   "scripts": {
-    "clean": "rimraf dist build",
     "postinstall": "prisma generate",
+    "clean": "rimraf dist build",
     "db:push": "prisma db push",
     "dev": "run-p dev:remix dev:server",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development ts-node ./src/app.ts",
-    "build": "npm run build:remix && npm run build:server",
+    "build": "npm run build:style && npm run build:remix && npm run build:server",
+    "build:style": "cross-env NODE_ENV=production ts-node ./scripts/genAntdStyles.tsx",
     "build:remix": "cross-env NODE_ENV=production remix build",
     "build:server": "cross-env NODE_ENV=production tsc -p ./tsconfig.build.json",
     "preview:prod": "cross-env NODE_ENV=production node dist/app.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@koa/router": "^12.0.1",
     "@prisma/client": "^5.8.0",
     "@remix-run/css-bundle": "^2.5.1",
@@ -46,6 +48,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@ant-design/static-style-extract": "^1.0.2",
     "@remix-run/dev": "^2.5.1",
     "@remix-run/v1-route-convention": "^0.1.4",
     "@swc/cli": "^0.1.63",
