@@ -19,11 +19,11 @@ export const links: LinksFunction = () => {
       rel: 'stylesheet',
       href: resetStyles,
     },
-    {
-      rel: 'stylesheet',
-      href: antdStyle,
-    },
   ];
+
+  if (process.env.NODE_ENV === 'production') {
+    result.push({ rel: 'stylesheet', href: antdStyle });
+  }
 
   cssBundleHref && result.push({ rel: 'stylesheet', href: cssBundleHref });
 
