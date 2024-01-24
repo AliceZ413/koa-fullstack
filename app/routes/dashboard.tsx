@@ -7,7 +7,10 @@ import { Outlet, useLocation } from '@remix-run/react';
 import layoutStyles from '../styles/layout.css';
 import LayoutHeader from '../components/layout/header';
 import LayoutMenu from '../components/layout/menu';
-import { MenuList } from '../../types/layout';
+import { MenuChild, MenuList } from '../../types/layout';
+import LayoutTabs from '../components/layout/tabs';
+import { useReducerContext } from '../providers/context';
+import { useGlobalContext } from '../stores/global';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: layoutStyles },
@@ -22,30 +25,24 @@ export default function Dashboard() {
   const [theme] = useState<SiderTheme>('light');
   const [selectedKey, setSelectedKey] = useState<string>(location.pathname);
   const [openKey, setOpenKey] = useState<string>();
-  const menuList: MenuList = [
-    {
-      code: '1',
-      label: 'Dashboard',
-      path: '/dashboard',
-      children: [
-        {
-          code: '1.1',
-          label: 'User',
-          path: '/dashboard/user',
-        },
-        {
-          code: '1.2',
-          label: 'Home',
-          path: '/dashboard/home',
-        },
-        {
-          code: '1.3',
-          label: 'UI-Component',
-          path: '/dashboard/ui-component',
-        },
-      ],
-    },
-  ];
+
+  const { state } = useGlobalContext();
+
+  const initMenuList = (menu: MenuList) => {
+    const list: MenuChild[] = [];
+
+    menu.forEach((e) => {
+      if (!e?.children?.length) {
+        list.push(e);
+      } else {
+        e?.children.forEach((child) => {
+          list.push(child);
+        });
+      }
+    });
+
+    return list;
+  };
 
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -72,7 +69,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const path = getFirstPathCode(location.pathname);
-    const item = menuList.find((e) => e.path === `/${path}`);
+    const item = state.menuList.find((e) => e.path === `/${path}`);
 
     setOpenKey(item ? item.code : '');
     setSelectedKey(location.pathname);
@@ -96,14 +93,15 @@ export default function Dashboard() {
           breakpoint='md'
         >
           <LayoutMenu
-            menuList={menuList}
+            menuList={state.menuList}
             selectedKey={selectedKey}
             openKey={openKey as string}
             onChangeOpenKey={(k) => setOpenKey(k)}
             onChangeSelectedKey={(k) => setSelectedKey(k)}
           />
         </Sider>
-        <Content>
+        <Content className='layout-page-content'>
+          <LayoutTabs menuList={state.flatMenuList} />
           <Outlet />
         </Content>
       </Layout>

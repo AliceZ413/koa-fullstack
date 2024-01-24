@@ -37,3 +37,9 @@
 .layout-page-sider {
   margin-bottom: 10px;
 }
+
+.layout-page-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
