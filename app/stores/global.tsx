@@ -1,11 +1,6 @@
-import {
-  Dispatch,
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useReducer,
-} from 'react';
-import { MenuList } from '../../types/layout';
+import { Dispatch, PropsWithChildren, createContext, useContext } from 'react';
+import { useImmerReducer } from 'use-immer';
+import { MenuChild, MenuList } from '../../types/layout';
 
 type State = {
   menuList: MenuList;
@@ -20,53 +15,50 @@ type Context = {
   dispatch: Dispatch<Action>;
 };
 
+const menuList = [
+  {
+    code: 'dashboard',
+    path: '/dashboard',
+    label: 'Dashboard',
+    children: [
+      {
+        code: 'dashboard/user',
+        path: '/dashboard/user',
+        label: 'User',
+      },
+      {
+        code: 'dashboard/home',
+        path: '/dashboard/home',
+        label: 'Home',
+      },
+      {
+        code: 'dashboard/ui-component',
+        path: '/dashboard/ui-component',
+        label: 'UI-Component',
+      },
+    ],
+  },
+];
+
+const initMenuList = (menu: MenuList) => {
+  const list: MenuChild[] = [];
+
+  menu.forEach((e) => {
+    if (!e?.children?.length) {
+      list.push(e);
+    } else {
+      e?.children.forEach((child) => {
+        list.push(child);
+      });
+    }
+  });
+
+  return list;
+};
+
 const initValue: State = {
-  menuList: [
-    {
-      code: 'dashboard',
-      path: '/dashboard',
-      label: 'Dashboard',
-      children: [
-        {
-          code: 'dashboard/user',
-          path: '/dashboard/user',
-          label: 'User',
-        },
-        {
-          code: 'dashboard/home',
-          path: '/dashboard/home',
-          label: 'Home',
-        },
-        {
-          code: 'dashboard/ui-component',
-          path: '/dashboard/ui-component',
-          label: 'UI-Component',
-        },
-      ],
-    },
-  ],
-  flatMenuList: [
-    {
-      code: 'dashboard',
-      path: '/dashboard',
-      label: 'Dashboard',
-    },
-    {
-      code: 'dashboard/user',
-      path: '/dashboard/user',
-      label: 'User',
-    },
-    {
-      code: 'dashboard/home',
-      path: '/dashboard/home',
-      label: 'Home',
-    },
-    {
-      code: 'dashboard/ui-component',
-      path: '/dashboard/ui-component',
-      label: 'UI-Component',
-    },
-  ],
+  menuList: [...menuList],
+  flatMenuList: initMenuList(menuList),
 };
 const GlobalContext = createContext<Context>({
   state: initValue,
@@ -74,10 +66,10 @@ const GlobalContext = createContext<Context>({
 });
 
 export const ReducerContextProvider = (props: PropsWithChildren) => {
-  const [state, dispatch] = useReducer((state: State, action: Action) => {
+  const [state, dispatch] = useImmerReducer((draft: State, action: Action) => {
     switch (action.type) {
       default:
-        return { ...state };
+        break;
     }
   }, initValue);
 

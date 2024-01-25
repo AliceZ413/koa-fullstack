@@ -28,22 +28,6 @@ export default function Dashboard() {
 
   const { state } = useGlobalContext();
 
-  const initMenuList = (menu: MenuList) => {
-    const list: MenuChild[] = [];
-
-    menu.forEach((e) => {
-      if (!e?.children?.length) {
-        list.push(e);
-      } else {
-        e?.children.forEach((child) => {
-          list.push(child);
-        });
-      }
-    });
-
-    return list;
-  };
-
   const toggle = () => {
     setCollapsed(!collapsed);
   };
