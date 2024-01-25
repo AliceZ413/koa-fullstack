@@ -49,7 +49,9 @@ export default function App() {
       <body>
         {/* BUG Provider必须此组件引入，其他地方讲将不会生效 */}
         <ReducerContextProvider>
-          <Outlet />
+          <div id='root'>
+            <Outlet />
+          </div>
         </ReducerContextProvider>
 
         <ScrollRestoration />

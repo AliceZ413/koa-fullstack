@@ -1,10 +1,12 @@
-import { Dropdown, Layout, Tooltip } from 'antd';
+import { Dropdown, Layout } from 'antd';
 import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+
+import styles from '../../styles/layout.module.css';
 
 const { Header } = Layout;
 
@@ -16,18 +18,18 @@ type LayoutHeaderProps = {
 
 export default function LayoutHeader(props: LayoutHeaderProps) {
   return (
-    <Header className='layout-page-header'>
+    <Header className={styles.layoutPageHeader}>
       <div
         className='logo'
         style={{ width: props.collapsed ? 80 : 200 }}
       ></div>
-      <div className='layout-page-header-main'>
+      <div className={styles.layoutPageHeaderMain}>
         <div onClick={props.toggle}>
-          <span className='sidebar-trigger'>
+          <span className={styles.sidebarTrigger}>
             {props.collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </span>
         </div>
-        <div className='actions'>
+        <div className={styles.actions}>
           <Dropdown
             menu={{
               items: [
@@ -44,7 +46,7 @@ export default function LayoutHeader(props: LayoutHeaderProps) {
               ],
             }}
           >
-            <span className='user-action'>Admin</span>
+            <span className={styles.userAction}>Admin</span>
           </Dropdown>
         </div>
       </div>

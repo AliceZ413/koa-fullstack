@@ -1,20 +1,13 @@
 import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
-import { LinksFunction } from '@remix-run/node';
 import { SiderTheme } from 'antd/es/layout/Sider';
 import { Outlet, useLocation } from '@remix-run/react';
 
-import layoutStyles from '../styles/layout.css';
+import styles from '../styles/layout.module.css';
 import LayoutHeader from '../components/layout/header';
 import LayoutMenu from '../components/layout/menu';
-import { MenuChild, MenuList } from '../../types/layout';
 import LayoutTabs from '../components/layout/tabs';
-import { useReducerContext } from '../providers/context';
 import { useGlobalContext } from '../stores/global';
-
-export const links: LinksFunction = () => [
-  { rel: 'stylesheet', href: layoutStyles },
-];
 
 const { Sider, Content } = Layout;
 
@@ -60,7 +53,7 @@ export default function Dashboard() {
   }, [location.pathname]);
 
   return (
-    <Layout className='layout-page'>
+    <Layout className={styles.layoutPage}>
       <LayoutHeader
         collapsed={collapsed}
         toggle={toggle}
@@ -68,7 +61,7 @@ export default function Dashboard() {
       />
       <Layout hasSider>
         <Sider
-          className='layout-page-sider'
+          className={styles.layoutPageSider}
           trigger={null}
           collapsible
           theme={theme}
@@ -84,7 +77,7 @@ export default function Dashboard() {
             onChangeSelectedKey={(k) => setSelectedKey(k)}
           />
         </Sider>
-        <Content className='layout-page-content'>
+        <Content className={styles.layoutPageContent}>
           <LayoutTabs menuList={state.flatMenuList} />
           <Outlet />
         </Content>

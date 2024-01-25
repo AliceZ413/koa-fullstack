@@ -1,7 +1,7 @@
-.layout-page {
+.layoutPage {
   height: 100%;
 }
-.layout-page-header {
+.layoutPageHeader {
   padding: 0 !important;
   display: flex;
   justify-content: space-between;
@@ -11,7 +11,7 @@
   background-color: #fff;
 }
 
-.layout-page-header-main {
+.layoutPageHeaderMain {
   padding: 0 15px;
   flex: 1;
   display: flex;
@@ -19,26 +19,26 @@
   align-items: center;
 }
 
-.layout-page-header-main .actions {
+.Actions {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.layout-page-header-main .sidebar-trigger {
+.sidebarTrigger {
   cursor: pointer;
 }
 
-.actions .user-action {
+.userAction {
   cursor: pointer;
 }
 
-.layout-page-sider {
+.layoutPageSider {
   margin-bottom: 10px;
 }
 
-.layout-page-content {
+.layoutPageContent {
   display: flex;
   flex-direction: column;
   flex: 1;
