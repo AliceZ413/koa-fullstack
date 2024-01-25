@@ -11,6 +11,7 @@
     "fullstack",
     "web"
   ],
+  "type": "module",
   "scripts": {
     "postinstall": "prisma generate",
     "clean": "rimraf dist build",

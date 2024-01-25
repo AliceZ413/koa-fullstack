@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# (弃用！！！) 一次typescript编译成esm模块的尝试
 
-## Getting Started
+（弃用的分支）
+以下说明几点将src代码改为esm的起因和弃用原因。
 
-First, run the development server:
+## 打算使用esm的起因
+由于本项目存在pure esm的依赖，由于本项目的Remix使用cjs导出，所以pure esm的依赖将无法在build构建后导入。
+处理方式有两种：1. 将pure esm依赖降级处理。 2. 将项目升级为esm
+这里打算采用第二种，所以对项目进行esm升级。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 使用esm失败的原因
+1. 项目需要进行如下修改
+   1. tsconfig.json：target = ES2022
+   2. tsconfig.json：module = Node16
+   3. tsconfig.json：moduleResolution = Node16
+   4. package.json：type = module
+   5. 导入需要加.js后缀
+2. 某些依赖并非pure esm，所以会出现无法导入的情况，比如 unstorage，诸多的依赖容易出现esm编译错误的问题并且社区上几乎没有关于这类问题的有效的解决方案。故放弃升级esm。

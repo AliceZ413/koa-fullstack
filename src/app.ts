@@ -2,8 +2,8 @@ import Koa from 'koa';
 import Router from '@koa/router';
 import KoaStatic from 'koa-static';
 import { broadcastDevReady, installGlobals } from '@remix-run/node';
-import { RemixMiddleware, build } from './middleware/remix.middleware';
-import { SessionMiddleware } from './middleware/session.middleware';
+import { RemixMiddleware, build } from './middleware/remix.middleware.js';
+// import { SessionMiddleware } from './middleware/session.middleware.js';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 
@@ -11,7 +11,7 @@ installGlobals();
 
 const server = new Koa();
 server.keys = ['r1x8m0o8px'];
-server.use(SessionMiddleware(server));
+// server.use(SessionMiddleware(server));
 server.use(KoaStatic('public'));
 
 const router = new Router();

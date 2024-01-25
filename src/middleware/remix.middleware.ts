@@ -7,7 +7,7 @@ import path from 'node:path';
 import Koa from 'koa';
 import chokidar from 'chokidar';
 import { ServerBuild, broadcastDevReady } from '@remix-run/node';
-import remixService from '../service/remix.service';
+import remixService from '../service/remix.service.js';
 
 // BUILD_PATH
 const BUILD_PATH = path.resolve(process.cwd(), './build/index.js');
