@@ -16,7 +16,7 @@
     "clean": "rimraf dist build",
     "db:push": "prisma db push",
     "dev": "npm run dev:remix-dev",
-    "dev:remix-dev": "cross-env NODE_ENV=development remix dev --manual -c 'nodemon'",
+    "dev:remix-dev": "cross-env NODE_ENV=development remix dev --manual -c 'tsx watch ./src/app.ts'",
     "dev_bk": "run-p dev:remix-watch dev:server",
     "dev:remix-watch": "cross-env NODE_ENV=development remix watch",
     "dev:server": "cross-env NODE_ENV=development ts-node --swc ./src/app.ts",
@@ -74,6 +74,7 @@
     "prisma": "^5.8.0",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
     "typescript": "^5"
   }
 }
