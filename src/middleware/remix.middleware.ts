@@ -33,15 +33,12 @@ const createDevRequestHandler: () => Koa.Middleware = () => {
 
   return async (ctx, next) => {
     try {
-      if (ctx.path.startsWith('/api')) {
-        return next();
-      }
       return remixService.createRequestHandler({
         build: build!,
         mode: 'development',
         getLoadContext(ctx) {
           return {
-            user: ctx.session?.user
+            user: ctx.session?.user,
           };
         },
       })(ctx, next);
@@ -64,10 +61,16 @@ function reimportServer(): ServerBuild {
   return require(BUILD_PATH) as ServerBuild;
 }
 
-export const RemixMiddleware =
-  process.env.NODE_ENV === 'development'
-    ? createDevRequestHandler()
-    : remixService.createRequestHandler({
-        build: build,
-        mode: build.mode,
-      });
+export default function RemixMiddleware(): Koa.Middleware {
+  return async (ctx, next) => {
+    if (remixService.isWhiteListRoute(ctx)) {
+      return next();
+    }
+    return process.env.NODE_ENV === 'development'
+      ? createDevRequestHandler()(ctx, next)
+      : remixService.createRequestHandler({
+          build: build,
+          mode: build.mode,
+        })(ctx, next);
+  };
+}

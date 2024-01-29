@@ -2,7 +2,7 @@ import KoaSession from 'koa-session';
 import Koa from 'koa';
 import { storage } from '../service/storage.service';
 
-export const SessionMiddleware: (app: Koa) => Koa.Middleware = (app) => {
+export default function SessionMiddleware(app: Koa): Koa.Middleware {
   return KoaSession(
     {
       store: {
@@ -25,4 +25,4 @@ export const SessionMiddleware: (app: Koa) => Koa.Middleware = (app) => {
     },
     app
   );
-};
+}

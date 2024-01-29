@@ -41,10 +41,6 @@ function createRequestHandler({
   const handleRequest = createRemixRequestHandler(build, mode);
   return async (ctx, next) => {
     try {
-      if (ctx.path.startsWith('/api')) {
-        return next();
-      }
-
       const request = createRemixRequest(ctx);
       const loadContext = await getLoadContext?.(ctx);
 

@@ -9,6 +9,7 @@ import { Suspense } from 'react';
 
 export async function loader({ context }: LoaderFunctionArgs) {
   console.log(context);
+  return {};
 }
 
 export default function IndexPage() {
