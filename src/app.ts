@@ -4,6 +4,7 @@ import KoaStatic from 'koa-static';
 import { broadcastDevReady, installGlobals } from '@remix-run/node';
 import { RemixMiddleware, build } from './middleware/remix.middleware';
 import { SessionMiddleware } from './middleware/session.middleware';
+import { prisma } from './lib/db';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 
