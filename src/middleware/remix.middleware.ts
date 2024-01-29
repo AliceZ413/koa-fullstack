@@ -33,9 +33,17 @@ const createDevRequestHandler: () => Koa.Middleware = () => {
 
   return async (ctx, next) => {
     try {
+      if (ctx.path.startsWith('/api')) {
+        return next();
+      }
       return remixService.createRequestHandler({
         build: build!,
         mode: 'development',
+        getLoadContext(ctx) {
+          return {
+            user: ctx.session?.user
+          };
+        },
       })(ctx, next);
     } catch (error) {
       console.log(error);

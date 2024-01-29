@@ -14,8 +14,10 @@ server.keys = ['r1x8m0o8px'];
 server.use(SessionMiddleware(server));
 server.use(KoaStatic('public'));
 
-const router = new Router();
-router.get('/api/auth/login', (ctx) => {
+const router = new Router({
+  prefix: '/api',
+});
+router.post('/user/login', (ctx) => {
   ctx.session &&
     (ctx.session.user = {
       isLogIn: true,
