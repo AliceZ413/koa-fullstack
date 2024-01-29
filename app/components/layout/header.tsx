@@ -15,6 +15,9 @@ const { Header } = Layout;
 type LayoutHeaderProps = {
   collapsed: boolean;
   theme: string;
+  data: {
+    username?: string;
+  };
   toggle: () => void;
 };
 
@@ -46,6 +49,7 @@ export default function LayoutHeader(props: LayoutHeaderProps) {
           </span>
         </div>
         <div className={styles.actions}>
+          {/* TODO 消息通知 */}
           <Dropdown
             menu={{
               items: [
@@ -66,7 +70,9 @@ export default function LayoutHeader(props: LayoutHeaderProps) {
               ],
             }}
           >
-            <span className={styles.userAction}>Admin</span>
+            <span className={styles.userAction}>
+              {props.data ? props.data.username : null}
+            </span>
           </Dropdown>
         </div>
       </div>

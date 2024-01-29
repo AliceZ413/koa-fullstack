@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
 import { SiderTheme } from 'antd/es/layout/Sider';
-import { Outlet, useLocation } from '@remix-run/react';
+import { Outlet, useLoaderData, useLocation } from '@remix-run/react';
 import { LoaderFunctionArgs, redirect } from '@remix-run/node';
 
 import styles from '../styles/layout.module.css';
@@ -28,11 +28,11 @@ const { Sider, Content } = Layout;
 
 export default function Dashboard() {
   const location = useLocation();
-
   const [collapsed, setCollapsed] = useState(false);
   const [theme] = useState<SiderTheme>('light');
   const [selectedKey, setSelectedKey] = useState<string>(location.pathname);
   const [openKey, setOpenKey] = useState<string>();
+  const loaderData = useLoaderData<typeof loader>();
 
   const { state } = useGlobalContext();
 
@@ -73,6 +73,9 @@ export default function Dashboard() {
         collapsed={collapsed}
         toggle={toggle}
         theme={theme}
+        data={{
+          username: loaderData.username,
+        }}
       />
       <Layout hasSider>
         <Sider
