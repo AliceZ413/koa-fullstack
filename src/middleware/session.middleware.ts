@@ -1,6 +1,6 @@
 import KoaSession from 'koa-session';
 import Koa from 'koa';
-import { storage } from '../service/storage.service';
+import { storage } from '../lib/storage';
 
 export default function SessionMiddleware(app: Koa): Koa.Middleware {
   return KoaSession(

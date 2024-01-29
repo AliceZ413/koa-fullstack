@@ -7,7 +7,7 @@ import path from 'node:path';
 import Koa from 'koa';
 import chokidar from 'chokidar';
 import { ServerBuild, broadcastDevReady } from '@remix-run/node';
-import remixService from '../service/remix.service';
+import remixUtil from '../lib/remix';
 
 // BUILD_PATH
 const BUILD_PATH = path.resolve(process.cwd(), './build/index.js');
@@ -33,7 +33,7 @@ const createDevRequestHandler: () => Koa.Middleware = () => {
 
   return async (ctx, next) => {
     try {
-      return remixService.createRequestHandler({
+      return remixUtil.createRequestHandler({
         build: build!,
         mode: 'development',
         getLoadContext(ctx) {
@@ -63,12 +63,12 @@ function reimportServer(): ServerBuild {
 
 export default function RemixMiddleware(): Koa.Middleware {
   return async (ctx, next) => {
-    if (remixService.isWhiteListRoute(ctx)) {
+    if (remixUtil.isWhiteListRoute(ctx)) {
       return next();
     }
     return process.env.NODE_ENV === 'development'
       ? createDevRequestHandler()(ctx, next)
-      : remixService.createRequestHandler({
+      : remixUtil.createRequestHandler({
           build: build,
           mode: build.mode,
         })(ctx, next);
