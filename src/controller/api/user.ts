@@ -2,6 +2,7 @@ import Router from '@koa/router';
 import { prisma } from '../../lib/db';
 import zValidation from '../../middleware/z-validation';
 import { LoginParams, loginParamsSchema } from '../../../shared/login';
+import { RemixUserContext } from '../../../shared/context';
 import SHA256 from 'crypto-js/sha256';
 
 const router = new Router({
@@ -25,11 +26,24 @@ router.post('/login', zValidation(loginParamsSchema), async (ctx) => {
     return;
   }
 
+  if (ctx.session) {
+    ctx.session.user = {
+      username: user.email,
+      isLogIn: true,
+    } as RemixUserContext;
+  }
   ctx.body = {
     code: 0,
     data: {
       username: user.email,
     },
+  };
+});
+
+router.post('/logout', async (ctx) => {
+  ctx.session = null;
+  ctx.body = {
+    code: 0,
   };
 });
 

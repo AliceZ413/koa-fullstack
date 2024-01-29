@@ -13,3 +13,9 @@ export const apiLogin = (data: { username: string; password: string }) => {
     },
   });
 };
+
+export const apiLogout = () => {
+  return ofetch<ResponseResult<unknown>>('/api/user/logout', {
+    method: 'post',
+  });
+};

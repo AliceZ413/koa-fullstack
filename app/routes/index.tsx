@@ -13,13 +13,5 @@ export async function loader({ context }: LoaderFunctionArgs) {
 }
 
 export default function IndexPage() {
-  return (
-    <ConfigProvider componentSize='middle'>
-      <App>
-        <Suspense fallback={null}>
-          <Outlet />
-        </Suspense>
-      </App>
-    </ConfigProvider>
-  );
+  return <Outlet />;
 }

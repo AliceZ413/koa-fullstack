@@ -7,6 +7,8 @@ import {
 } from '@ant-design/icons';
 
 import styles from '../../styles/layout.module.css';
+import { apiLogout } from '../../apis/user';
+import { useNavigate } from '@remix-run/react';
 
 const { Header } = Layout;
 
@@ -17,6 +19,20 @@ type LayoutHeaderProps = {
 };
 
 export default function LayoutHeader(props: LayoutHeaderProps) {
+  const navigate = useNavigate();
+  const onActionClick = async (action: string) => {
+    switch (action) {
+      case 'userInfo':
+        return;
+      case 'userSetting':
+        return;
+      case 'logout':
+        const res = await apiLogout();
+        res && navigate('/login');
+        return;
+    }
+  };
+
   return (
     <Header className={styles.layoutPageHeader}>
       <div
@@ -41,7 +57,11 @@ export default function LayoutHeader(props: LayoutHeaderProps) {
                 {
                   key: '2',
                   icon: <LogoutOutlined />,
-                  label: <span>退出登录</span>,
+                  label: (
+                    <span onClick={() => onActionClick('logout')}>
+                      退出登录
+                    </span>
+                  ),
                 },
               ],
             }}

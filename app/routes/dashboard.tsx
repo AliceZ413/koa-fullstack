@@ -2,12 +2,27 @@ import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
 import { SiderTheme } from 'antd/es/layout/Sider';
 import { Outlet, useLocation } from '@remix-run/react';
+import { LoaderFunctionArgs, redirect } from '@remix-run/node';
 
 import styles from '../styles/layout.module.css';
 import LayoutHeader from '../components/layout/header';
 import LayoutMenu from '../components/layout/menu';
 import LayoutTabs from '../components/layout/tabs';
 import { useGlobalContext } from '../stores/global';
+import { RemixUserContext } from '../../shared/context';
+
+export function loader({ context }: LoaderFunctionArgs) {
+  console.log(context);
+
+  const user = context.user as RemixUserContext;
+  if (!user || !user.isLogIn) {
+    return redirect('/login');
+  }
+
+  return {
+    username: user.username,
+  };
+}
 
 const { Sider, Content } = Layout;
 

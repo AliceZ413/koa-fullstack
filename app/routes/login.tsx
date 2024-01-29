@@ -1,9 +1,13 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 import styles from '../styles/login.module.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { apiLogin } from '../apis/user';
+import { useNavigate } from '@remix-run/react';
+import { useState } from 'react';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
+  const [alert, setAlert] = useState('');
   const onFinish = async (values: { username: string; password: string }) => {
     const res = await apiLogin({
       username: values.username,
@@ -11,8 +15,9 @@ export default function LoginPage() {
     });
     if (res) {
       if (res.code === 0) {
-        console.log(res.data);
+        navigate('/dashboard/home');
       } else {
+        setAlert(res.msg);
       }
     }
   };
@@ -37,6 +42,9 @@ export default function LoginPage() {
           <Input.Password prefix={<LockOutlined />} />
         </Form.Item>
         <Form.Item>
+          {alert ? (
+            <Typography.Text type='danger'>{alert}</Typography.Text>
+          ) : null}
           <Button
             block
             htmlType='submit'

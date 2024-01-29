@@ -12,6 +12,7 @@ import {
 import resetStyles from './styles/reset.css';
 import antdStyle from './styles/antd.min.css';
 import { ReducerContextProvider } from './providers/context';
+import { ConfigProvider, App as AntdApp } from 'antd';
 
 export const links: LinksFunction = () => {
   const result: LinkDescriptor[] = [
@@ -50,7 +51,11 @@ export default function App() {
         {/* BUG Provider必须此组件引入，其他地方讲将不会生效 */}
         <ReducerContextProvider>
           <div id='root'>
-            <Outlet />
+            <ConfigProvider componentSize='middle'>
+              <AntdApp>
+                <Outlet />
+              </AntdApp>
+            </ConfigProvider>
           </div>
         </ReducerContextProvider>
 
