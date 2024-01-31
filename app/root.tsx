@@ -8,11 +8,30 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-
 import resetStyles from './styles/reset.css';
 import antdStyle from './styles/antd.min.css';
 import { ReducerContextProvider } from './providers/context';
 import { ConfigProvider, App as AntdApp } from 'antd';
+import { PropsWithChildren } from 'react';
+import { ClientOnly } from 'remix-utils/client-only';
+
+const Wrapper = ({ children }: PropsWithChildren) => {
+  return (
+    <html>
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ClientOnly>{() => children}</ClientOnly>
+
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV !== 'production' && <LiveReload />}
+      </body>
+    </html>
+  );
+};
 
 export const links: LinksFunction = () => {
   const result: LinkDescriptor[] = [
@@ -42,27 +61,17 @@ export const meta: MetaFunction = () => {
 
 export default function App() {
   return (
-    <html>
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {/* BUG Provider必须此组件引入，其他地方讲将不会生效 */}
-        <ReducerContextProvider>
-          <div id='root'>
-            <ConfigProvider componentSize='middle'>
-              <AntdApp>
-                <Outlet />
-              </AntdApp>
-            </ConfigProvider>
-          </div>
-        </ReducerContextProvider>
-
-        <ScrollRestoration />
-        <Scripts />
-        {process.env.NODE_ENV !== 'production' && <LiveReload />}
-      </body>
-    </html>
+    <Wrapper>
+      {/* BUG Provider必须此组件引入，其他地方讲将不会生效 */}
+      <ReducerContextProvider>
+        <div id='root'>
+          <ConfigProvider componentSize='middle'>
+            <AntdApp>
+              <Outlet />
+            </AntdApp>
+          </ConfigProvider>
+        </div>
+      </ReducerContextProvider>
+    </Wrapper>
   );
 }

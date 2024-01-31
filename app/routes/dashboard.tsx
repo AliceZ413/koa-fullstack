@@ -1,7 +1,12 @@
 import { Layout } from 'antd';
 import { useEffect, useState } from 'react';
 import { SiderTheme } from 'antd/es/layout/Sider';
-import { Outlet, useLoaderData, useLocation } from '@remix-run/react';
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useRouteError,
+} from '@remix-run/react';
 import { LoaderFunctionArgs, redirect } from '@remix-run/node';
 
 import styles from '../styles/layout.module.css';
