@@ -1,20 +1,23 @@
-import { Layout } from 'antd';
+import { Avatar, Dropdown, TabPaneProps } from 'antd';
 import { useEffect, useState } from 'react';
-import { SiderTheme } from 'antd/es/layout/Sider';
 import {
+  Link,
   Outlet,
   useLoaderData,
   useLocation,
-  useRouteError,
+  useNavigate,
 } from '@remix-run/react';
 import { LoaderFunctionArgs, redirect } from '@remix-run/node';
-
-import styles from '../styles/layout.module.css';
-import LayoutHeader from '../components/layout/header';
-import LayoutMenu from '../components/layout/menu';
-import LayoutTabs from '../components/layout/tabs';
-import { useGlobalContext } from '../stores/global';
+import {
+  MenuDataItem,
+  PageContainer,
+  ProLayout,
+} from '@ant-design/pro-components';
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import store from 'store';
 import { RemixUserContext } from '../../shared/context';
+import { apiLogout } from '../apis/user';
+import { useGlobalContext } from '../stores/global';
 
 export function loader({ context }: LoaderFunctionArgs) {
   console.log(context);
@@ -29,82 +32,217 @@ export function loader({ context }: LoaderFunctionArgs) {
   };
 }
 
-const { Sider, Content } = Layout;
-
 export default function Dashboard() {
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-  const [theme] = useState<SiderTheme>('light');
-  const [selectedKey, setSelectedKey] = useState<string>(location.pathname);
-  const [openKey, setOpenKey] = useState<string>();
   const loaderData = useLoaderData<typeof loader>();
+  const navigate = useNavigate();
+  const [tabActiveKey, setTabActiveKey] = useState('');
 
-  const { state } = useGlobalContext();
-
-  const toggle = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const getStrTimesIndex = (str: string, cha: string, num: number) => {
-    let x = str.indexOf(cha);
-
-    for (let i = 0; i < num; i++) {
-      x = str.indexOf(cha, x + 1);
-    }
-
-    return x;
-  };
-
-  const getFirstPathCode = (path: string) => {
-    const index0 = getStrTimesIndex(path, '/', 0);
-    const index1 = getStrTimesIndex(path, '/', 1);
-
-    const activeKey = path.slice(index0 + 1, index1 > 0 ? index1 : path.length);
-
-    return activeKey;
-  };
+  const { dispatch, state } = useGlobalContext();
 
   useEffect(() => {
-    const path = getFirstPathCode(location.pathname);
-    const item = state.menuList.find((e) => e.path === `/${path}`);
+    const tabList = store.get('tabList');
+    if (tabList) {
+      dispatch({
+        type: 'tabList.set',
+        payload: tabList,
+      });
+    }
 
-    setOpenKey(item ? item.code : '');
-    setSelectedKey(location.pathname);
-  }, [location.pathname]);
+    const tabActiveTabKey = store.get('tabActiveTabKey');
+    if (tabActiveTabKey) {
+      dispatch({
+        type: 'tabActiveTabKey.set',
+        payload: tabActiveTabKey,
+      });
+    }
+  }, []);
+
+  const onActionClick = async (action: string) => {
+    switch (action) {
+      case 'userInfo':
+        return;
+      case 'userSetting':
+        return;
+      case 'logout':
+        const res = await apiLogout();
+        res && navigate('/login');
+        return;
+    }
+  };
+
+  const handleClickMenuItem = (item: MenuDataItem) => {
+    navigate(item.path!);
+    const exist = state.tabList.findIndex((e) => e.key === item.key);
+    if (exist === -1) {
+      dispatch({
+        type: 'tabList.push',
+        payload: {
+          key: item.key,
+          tab: item.name,
+          path: item.path,
+        },
+      });
+    }
+    dispatch({
+      type: 'tabActiveTabKey.set',
+      payload: item.key,
+    });
+  };
 
   return (
-    <Layout className={styles.layoutPage}>
-      <LayoutHeader
-        collapsed={collapsed}
-        toggle={toggle}
-        theme={theme}
-        data={{
-          username: loaderData.username,
-        }}
-      />
-      <Layout hasSider>
-        <Sider
-          className={styles.layoutPageSider}
-          trigger={null}
-          collapsible
-          theme={theme}
-          collapsedWidth={80}
-          collapsed={collapsed}
-          breakpoint='md'
+    <ProLayout
+      layout='mix'
+      route={state.layoutMenuList}
+      location={{
+        pathname: location.pathname,
+      }}
+      menuItemRender={(item) => (
+        <Link
+          to={item.path!}
+          onClick={() => handleClickMenuItem(item)}
         >
-          <LayoutMenu
-            menuList={state.menuList}
-            selectedKey={selectedKey}
-            openKey={openKey as string}
-            onChangeOpenKey={(k) => setOpenKey(k)}
-            onChangeSelectedKey={(k) => setSelectedKey(k)}
-          />
-        </Sider>
-        <Content className={styles.layoutPageContent}>
-          <LayoutTabs menuList={state.flatMenuList} />
-          <Outlet />
-        </Content>
-      </Layout>
-    </Layout>
+          {item.name}
+        </Link>
+      )}
+      logo={false}
+      title={'Dashboard'}
+      collapsedButtonRender={() => null}
+      avatarProps={{
+        render() {
+          return (
+            <Dropdown
+              menu={{
+                items: [
+                  {
+                    key: '1',
+                    icon: <UserOutlined />,
+                    label: <span>个人设置</span>,
+                  },
+                  {
+                    key: '2',
+                    icon: <LogoutOutlined />,
+                    label: (
+                      <span onClick={() => onActionClick('logout')}>
+                        退出登录
+                      </span>
+                    ),
+                  },
+                ],
+              }}
+            >
+              <Avatar>{loaderData.username.charAt(0).toUpperCase()}</Avatar>
+            </Dropdown>
+          );
+        },
+      }}
+    >
+      <PageContainer
+        tabActiveKey={state.tabActiveKey}
+        tabList={state.tabList}
+        tabProps={{
+          type: 'editable-card',
+          hideAdd: true,
+          onTabClick: (value) => {
+            const tab = state.tabList.find((e) => e.key === value);
+            if (tab) {
+              if (tab.key) {
+                const key = tab.key as string;
+                dispatch({
+                  type: 'tabActiveTabKey.set',
+                  payload: key,
+                });
+                navigate(key.startsWith('/') ? key : `/${key}`);
+              }
+            }
+          },
+          onEdit: (key, action) => {
+            if (action === 'remove') {
+              const index = state.tabList.findIndex((e) => e.key === key);
+              const newTags = state.tabList.filter((e) => e.key !== key);
+              dispatch({
+                type: 'tabList.set',
+                payload: newTags,
+              });
+              if (key === state.tabActiveKey) {
+                if (newTags[index]) {
+                  navigate(newTags[index].path);
+                  dispatch({
+                    type: 'tabActiveTabKey.set',
+                    payload: newTags[index].key,
+                  });
+                  return;
+                }
+                if (newTags[index - 1]) {
+                  navigate(newTags[index - 1].path);
+                  dispatch({
+                    type: 'tabActiveTabKey.set',
+                    payload: newTags[index - 1].key,
+                  });
+                  return;
+                }
+                navigate('/dashboard');
+              }
+            } else {
+              return;
+            }
+          },
+        }}
+        ghost
+        header={{
+          breadcrumb: {},
+          title: '',
+          subTitle: '',
+        }}
+      >
+        <button
+          onClick={() =>
+            dispatch({
+              type: 'tabActiveTabKey.set',
+              payload: 'dashboard',
+            })
+          }
+        >
+          test
+        </button>
+        <Outlet />
+      </PageContainer>
+    </ProLayout>
   );
+
+  // return (
+  //   <Layout className={styles.layoutPage}>
+  //     <LayoutHeader
+  //       collapsed={collapsed}
+  //       toggle={toggle}
+  //       theme={theme}
+  //       data={{
+  //         username: loaderData.username,
+  //       }}
+  //     />
+  //     <Layout hasSider>
+  //       <Sider
+  //         className={styles.layoutPageSider}
+  //         trigger={null}
+  //         collapsible
+  //         theme={theme}
+  //         collapsedWidth={80}
+  //         collapsed={collapsed}
+  //         breakpoint='md'
+  //       >
+  //         <LayoutMenu
+  //           menuList={state.menuList}
+  //           selectedKey={selectedKey}
+  //           openKey={openKey as string}
+  //           onChangeOpenKey={(k) => setOpenKey(k)}
+  //           onChangeSelectedKey={(k) => setSelectedKey(k)}
+  //         />
+  //       </Sider>
+  //       <Content className={styles.layoutPageContent}>
+  //         <LayoutTabs menuList={state.flatMenuList} />
+  //         <Outlet />
+  //       </Content>
+  //     </Layout>
+  //   </Layout>
+  // );
 }

@@ -1,14 +1,20 @@
 import { Dispatch, PropsWithChildren, createContext, useContext } from 'react';
 import { useImmerReducer } from 'use-immer';
+import { Route } from '@ant-design/pro-layout/lib/typing';
+import store from 'store';
 import { MenuChild, MenuList } from '../../types/layout';
 
 type State = {
   menuList: MenuList;
   flatMenuList: MenuList;
+  layoutMenuList: Route;
+
+  tabList: Array<{ tab: string; key: string; path: string }>;
+  tabActiveKey: string;
 };
 type Action = {
   type: string;
-  payload?: Partial<State>;
+  payload?: any;
 };
 type Context = {
   state: State;
@@ -40,7 +46,7 @@ const menuList = [
   },
 ];
 
-const initMenuList = (menu: MenuList) => {
+const handleFlatMenuList = (menu: MenuList) => {
   const list: MenuChild[] = [];
 
   menu.forEach((e) => {
@@ -56,9 +62,35 @@ const initMenuList = (menu: MenuList) => {
   return list;
 };
 
+const handleLayoutMenuList = (menu: MenuList) => {
+  const route: Route = {
+    path: '/',
+    routes: [],
+  };
+
+  route.routes = menu.map((e) => {
+    return {
+      key: e.code,
+      path: e.path,
+      name: e.label,
+      children: e.children?.map((child) => ({
+        key: child.code,
+        path: child.path,
+        name: child.label,
+      })),
+    };
+  });
+
+  return route;
+};
+
 const initValue: State = {
   menuList: [...menuList],
-  flatMenuList: initMenuList(menuList),
+  flatMenuList: handleFlatMenuList(menuList),
+  layoutMenuList: handleLayoutMenuList(menuList),
+
+  tabList: [],
+  tabActiveKey: '',
 };
 const GlobalContext = createContext<Context>({
   state: initValue,
@@ -68,6 +100,23 @@ const GlobalContext = createContext<Context>({
 export const ReducerContextProvider = (props: PropsWithChildren) => {
   const [state, dispatch] = useImmerReducer((draft: State, action: Action) => {
     switch (action.type) {
+      case 'tabList.push':
+        draft.tabList.push(action.payload);
+        store.set('tabList', draft.tabList);
+        break;
+      case 'tabList.set':
+        draft.tabList = [...action.payload];
+        store.set('tabList', draft.tabList);
+        break;
+      case 'tabList.splice':
+        const { start, deleteNum = 1 } = action.payload;
+        draft.tabList.splice(start, deleteNum);
+        store.set('tabList', draft.tabList);
+        break;
+      case 'tabActiveTabKey.set':
+        draft.tabActiveKey = action.payload;
+        store.set('tabActiveTabKey', draft.tabActiveKey);
+        break;
       default:
         break;
     }
